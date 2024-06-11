@@ -1,1 +1,5 @@
-<p>uploadform works!</p>
+<h1>This is a file upload to my personal s3 bucket please don't do anything crazy thanks</h1>
+<form action="POST" [formGroup]="fb">
+  <input type="file" (change)="onFileSelected($event)" formControlName="file">
+  <button type="submit"></button>
+</form>
