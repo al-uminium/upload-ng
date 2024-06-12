@@ -43,13 +43,13 @@ export class UploadformComponent implements OnInit {
     this.uploadSvc.fileUploadWithoutBlob(this.file)
       .subscribe({
         next: (e) => {
+          this.uploadSvc.response.next(e)
           this.router.navigate(['upload/success']);
-          this.uploadSvc.response.next(e);
         },
         complete: () => console.info("Completed"),
         error: (e) => {
-          this.router.navigate(['upload/fail']);
           console.error(e);
+          this.router.navigate(['upload/fail']);
         }
       })
   }

@@ -1,6 +1,7 @@
-<p>uploadsuccess works!</p>
 
-<img [src]="url">
+@if (url.length > 0) {
+  <p>upload success</p>
+  <img [src]="url">
+}
 
-
-<a [routerLink]="[ '/' ]" routerLinkActive="active">Go back</a>
+<!-- <button (click)="refresh()">Click mee</button> -->

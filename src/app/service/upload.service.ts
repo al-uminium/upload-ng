@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable, Subject, Subscription } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -45,12 +45,5 @@ export class UploadService {
     formData.append('image', file);
     formData.append('fileName', file.name);
     return this.http.post(this.url, formData, {responseType: 'text'})
-                    // .subscribe({
-                    //   next: (e) => console.log(e),
-                    //   complete: () => console.info("Completed"),
-                    //   error: (e) => console.error(e)
-                    // })
   }
-
-  constructor() { }
 }

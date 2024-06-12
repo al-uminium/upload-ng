@@ -1,6 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { UploadService } from '../../service/upload.service';
-import { Subscription } from 'rxjs';
+import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
