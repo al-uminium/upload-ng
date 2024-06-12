@@ -15,6 +15,9 @@ export class UploadsuccessComponent implements OnInit{
   sub$!: Subscription
   url: string = ""
 
+  // this.url gets "resolved" after oninit, so it doesn't update
+  // solution: wait for event to be emitted before rendering this. 
+  // need to use a guard?
   ngOnInit(): void {
     this.sub$ = this.uploadSvc.response$.subscribe((url: string) => {
       this.url = "https://alzj-bucket.sgp1.digitaloceanspaces.com/" + url;
