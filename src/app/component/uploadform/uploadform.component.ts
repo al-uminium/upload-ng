@@ -1,6 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UploadService } from '../../service/upload.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-uploadform',
@@ -13,6 +14,7 @@ import { UploadService } from '../../service/upload.service';
 export class UploadformComponent implements OnInit {
   fb!: FormGroup
   file!: File
+  sub$!: Subscription
 
   private readonly uploadSvc = inject(UploadService);
 
@@ -29,8 +31,18 @@ export class UploadformComponent implements OnInit {
   onSubmit(): void {
     this.uploadSvc.convertToBlob(this.file).then(
       (blob) => {
-        this.uploadSvc.fileUpload(blob, this.file.name)
+        this.sub$ = this.uploadSvc.fileUpload(blob, this.file.name)
+        this.sub$.unsubscribe
       }
     )
+  }
+
+  onSubmitWithoutBlob(): void {
+    this.uploadSvc.fileUploadWithoutBlob(this.file)
+                    .subscribe({
+                      next: (e) => console.log(e),
+                      complete: () => console.info("Completed"),
+                      error: (e) => console.error(e)
+                    })
   }
 }

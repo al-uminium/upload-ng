@@ -14,6 +14,8 @@ export class UploadService {
       const reader = new FileReader();
       reader.readAsArrayBuffer(file);
       reader.onload = () => {
+        console.log("Loaded and ready to blob");
+        console.log(reader.result);
         resolve(new Blob([reader.result!], { type: file.type}));
       }
       reader.onerror = (e) => {
@@ -22,13 +24,30 @@ export class UploadService {
     })
   }
 
+  // This sends as a multipart form to spring backend, even though it was converted into a blob. 
+  // So now idk if it's even worth converting it into a blob in the first place.
   fileUpload(blob: Blob, fileName: string): Subscription {
     const formData = new FormData();
-    formData.append('image', blob, fileName);
+    formData.append('image', blob);
+    formData.append('fileName', fileName);
     return this.http.post(this.url, formData).subscribe({
       complete: () => console.info("Completed"),
       error: (e) => console.error(e)
     })
+  }
+
+  // so I don't need to send it as a blob lol.
+  fileUploadWithoutBlob(file: File) {
+    const formData = new FormData();
+    console.log(file.name);
+    formData.append('image', file);
+    formData.append('fileName', file.name);
+    return this.http.post(this.url, formData, {responseType: 'text'})
+                    // .subscribe({
+                    //   next: (e) => console.log(e),
+                    //   complete: () => console.info("Completed"),
+                    //   error: (e) => console.error(e)
+                    // })
   }
 
   constructor() { }
