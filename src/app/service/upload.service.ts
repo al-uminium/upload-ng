@@ -7,10 +7,9 @@ import { BehaviorSubject, Subject, Subscription } from 'rxjs';
 })
 export class UploadService {
   private readonly http = inject(HttpClient);
-  private readonly url: string = "http://localhost:8080/api/upload"
-  // private readonly url: string = "http://empowering-nurturing.railway.internal/api/upload"
+  // private readonly url: string = "http://localhost:8080/api/upload"
+  private readonly url: string = "https://empowering-nurturing-production.up.railway.app"
   response = new BehaviorSubject<string>("");
-  // response = new Subject<any>;
   response$ = this.response.asObservable();
 
   convertToBlob(file: File): Promise<Blob> {
