@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Subject, Subscription } from 'rxjs';
+import { BehaviorSubject, Subject, Subscription } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +8,9 @@ import { Subject, Subscription } from 'rxjs';
 export class UploadService {
   private readonly http = inject(HttpClient);
   private readonly url: string = "http://localhost:8080/api/upload"
-  response = new Subject<any>;
+  // private readonly url: string = "http://empowering-nurturing.railway.internal/api/upload"
+  response = new BehaviorSubject<string>("");
+  // response = new Subject<any>;
   response$ = this.response.asObservable();
 
   convertToBlob(file: File): Promise<Blob> {

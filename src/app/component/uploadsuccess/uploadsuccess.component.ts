@@ -1,26 +1,24 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { UploadService } from '../../service/upload.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-uploadsuccess',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive],
+  imports: [CommonModule, RouterLink, RouterLinkActive],
   templateUrl: './uploadsuccess.component.html',
   styleUrl: './uploadsuccess.component.css'
 })
 export class UploadsuccessComponent implements OnInit{
   private readonly uploadSvc = inject(UploadService)
-  sub$!: Subscription
+  sub$!: Subscription;
   url: string = ""
+  // sub$!: Subscription;
 
-  // this.url gets "resolved" after oninit, so it doesn't update
-  // solution: wait for event to be emitted before rendering this. 
-  // need to use a guard?
+  //need to use behaviorsubject to retrieve data after it was emitted before instantiation. 
   ngOnInit(): void {
-    this.sub$ = this.uploadSvc.response$.subscribe((url: string) => {
-      this.url = "https://alzj-bucket.sgp1.digitaloceanspaces.com/" + url;
-    })
+    this.sub$ = this.uploadSvc.response$.subscribe(url => this.url = "https://alzj-bucket.sgp1.digitaloceanspaces.com/"+url)
   }
 }
